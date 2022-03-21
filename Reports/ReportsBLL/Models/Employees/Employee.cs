@@ -1,10 +1,12 @@
-﻿using ReportsBLL.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using ReportsBLL.Interfaces;
+using ReportsBLL.Models;
+using ReportsBLL.Models.Employees;
 using ReportsBLL.Models.Problems;
 using ReportsBLL.Models.Reports;
-using ReportsBLL.Tools;
 using ReportsBLL.Tools.Exceptions;
-
-namespace ReportsBLL.Models.Employees;
 
 public class Employee : BaseEntity, IAggregateRoot, IEmployee, ISubordinate, ISupervisor
 {

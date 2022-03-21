@@ -1,5 +1,6 @@
-﻿namespace ReportsBLL.Interfaces;
-
-public interface IViewModel
+﻿namespace ReportsBLL.Interfaces
 {
+    public interface IViewModel
+    {
+    }
 }

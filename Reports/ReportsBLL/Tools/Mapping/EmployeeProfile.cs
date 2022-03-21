@@ -1,18 +1,16 @@
 ﻿using AutoMapper;
-using ReportsBLL.DataTransferObjects;
-using ReportsBLL.DataTransferObjects.Employees;
-using ReportsBLL.Models.Employees;
 
-namespace ReportsBLL.Tools.Mapping;
-
-public class EmployeeProfile : Profile
+namespace ReportsBLL.Tools.Mapping
 {
-    public EmployeeProfile()
+    public class EmployeeProfile : Profile
     {
-        CreateMap<Employee, EmployeeDto>();
+        public EmployeeProfile()
+        {
+            CreateMap<Employee, EmployeeDto>();
 
-        ShouldUseConstructor = info => info.IsFamily || info.IsPublic;
-        CreateMap<AddEmployeeDto, Employee>();
-        CreateMap<UpdateEmployeeDto, Employee>();
+            ShouldUseConstructor = info => info.IsFamily || info.IsPublic;
+            CreateMap<AddEmployeeDto, Employee>();
+            CreateMap<UpdateEmployeeDto, Employee>();
+        }
     }
 }

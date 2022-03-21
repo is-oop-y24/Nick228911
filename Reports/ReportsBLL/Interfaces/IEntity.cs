@@ -1,6 +1,7 @@
-﻿namespace ReportsBLL.Interfaces;
-
-public interface IEntity
+﻿namespace ReportsBLL.Interfaces
 {
-    public ulong Id { get; }
+    public interface IEntity
+    {
+        public ulong Id { get; }
+    }
 }

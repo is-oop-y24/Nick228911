@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ReportsBLL.Interfaces;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using ReportsDAL.Data;
-
-namespace ReportsAPI.Extensions;
 
 public static class ServiceCollectionExtensions
 {

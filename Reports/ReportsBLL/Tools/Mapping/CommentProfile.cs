@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using ReportsBLL.DataTransferObjects.Comments;
 using ReportsBLL.Models.Problems;
 
-namespace ReportsBLL.Tools.Mapping;
-
-public class CommentProfile : Profile
+namespace ReportsBLL.Tools.Mapping
 {
-    public CommentProfile()
+    public class CommentProfile : Profile
     {
-        CreateMap<Comment, CommentDto>();
+        public CommentProfile()
+        {
+            CreateMap<Comment, CommentDto>();
+        }
     }
 }

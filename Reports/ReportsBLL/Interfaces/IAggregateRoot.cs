@@ -1,5 +1,6 @@
-﻿namespace ReportsBLL.Interfaces;
-
-public interface IAggregateRoot
+﻿namespace ReportsBLL.Interfaces
 {
+    public interface IAggregateRoot
+    {
+    }
 }

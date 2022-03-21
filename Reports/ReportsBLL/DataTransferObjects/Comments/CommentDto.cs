@@ -1,6 +1,5 @@
-﻿using ReportsBLL.Interfaces;
-
-namespace ReportsBLL.DataTransferObjects.Comments;
+﻿using System;
+using ReportsBLL.Interfaces;
 
 public class CommentDto : IViewModel
 {

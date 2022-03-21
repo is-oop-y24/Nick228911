@@ -1,11 +1,8 @@
-using ReportsAPI.Extensions;
-using ReportsBLL.DataTransferObjects;
-using ReportsBLL.DataTransferObjects.Comments;
-using ReportsBLL.DataTransferObjects.Employees;
-using ReportsBLL.DataTransferObjects.Problems;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using ReportsBLL.DataTransferObjects.Reports;
 using ReportsBLL.Interfaces;
-using ReportsBLL.Models.Employees;
 using ReportsBLL.Services;
 using ReportsDAL.Data;
 using ReportsDAL.Data.Repositories;

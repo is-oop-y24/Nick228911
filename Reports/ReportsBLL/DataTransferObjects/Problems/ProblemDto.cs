@@ -1,7 +1,6 @@
-﻿using ReportsBLL.DataTransferObjects.Comments;
+﻿using System;
+using System.Collections.Generic;
 using ReportsBLL.Interfaces;
-
-namespace ReportsBLL.DataTransferObjects.Problems;
 
 public class ProblemDto : IViewModel
 {

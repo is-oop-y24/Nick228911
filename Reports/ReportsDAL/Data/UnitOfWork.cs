@@ -1,21 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ReportsBLL.Interfaces;
-using ReportsBLL.Models;
-using ReportsDAL.Data.Repositories;
+﻿using System.Threading.Tasks;
 
-namespace ReportsDAL.Data;
-
-public class UnitOfWork : IUnitOfWork
+namespace ReportsDAL.Data
 {
-    private readonly ReportsDbContext _dbContext;
-
-    public UnitOfWork(ReportsDbContext dbContext)
+    public class UnitOfWork : IUnitOfWork
     {
-        _dbContext = dbContext;
-    }
+        private readonly ReportsDbContext _dbContext;
 
-    public Task<int> SaveChangesAsync()
-    {
-        return _dbContext.SaveChangesAsync();
+        public UnitOfWork(ReportsDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public Task<int> SaveChangesAsync()
+        {
+            return _dbContext.SaveChangesAsync();
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace ReportsBLL.Interfaces;
+﻿using System.Threading.Tasks;
 
 public interface IUnitOfWork
 {

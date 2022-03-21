@@ -1,71 +1,70 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ReportsAPI.Tools;
-using ReportsBLL.DataTransferObjects;
-using ReportsBLL.DataTransferObjects.Employees;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using ReportsBLL.Services;
-using ReportsBLL.Tools;
 
-namespace ReportsAPI.Controllers;
-
-public class EmployeeController : BaseApiController
+namespace ReportsAPI.Controllers
 {
-    private readonly EmployeeService _employeeService;
-    private string previousUsernameFilter;
-
-    public EmployeeController(EmployeeService employeeService)
+    public class EmployeeController : BaseApiController
     {
-        _employeeService = employeeService;
-    }
+        private readonly EmployeeService _employeeService;
+        private string previousUsernameFilter;
 
-    [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] string? usernameFilter, int? pageNumber)
-    {
-        if (usernameFilter != previousUsernameFilter)
-            pageNumber = 1;
+        public EmployeeController(EmployeeService employeeService)
+        {
+            _employeeService = employeeService;
+        }
 
-        previousUsernameFilter = usernameFilter;
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] string? usernameFilter, int? pageNumber)
+        {
+            if (usernameFilter != previousUsernameFilter)
+                pageNumber = 1;
 
-        var response = await _employeeService.GetAllAsync();
-        var employees = response.DataTransferObjects;
+            previousUsernameFilter = usernameFilter;
 
-        if (!string.IsNullOrEmpty(usernameFilter))
-            employees = employees.Where(e => e.Username == usernameFilter);
+            var response = await _employeeService.GetAllAsync();
+            var employees = response.DataTransferObjects;
 
-        const int pageSize = 3;
-        return Ok(new PaginatedList<EmployeeDto>(employees.ToList(), pageNumber ?? 1, pageSize));
-    }
+            if (!string.IsNullOrEmpty(usernameFilter))
+                employees = employees.Where(e => e.Username == usernameFilter);
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get(ulong id)
-    {
-        var response = await _employeeService.GetAsync(id);
-        if (!response.Success) return BadRequest(response.ErrorMessage);
+            const int pageSize = 3;
+            return Ok(new PaginatedList<EmployeeDto>(employees.ToList(), pageNumber ?? 1, pageSize));
+        }
 
-        return Ok(response.DataTransferObject);
-    }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(ulong id)
+        {
+            var response = await _employeeService.GetAsync(id);
+            if (!response.Success) return BadRequest(response.ErrorMessage);
 
-    [HttpPost]
-    public async Task<IActionResult> Save([FromBody] AddEmployeeDto addEmployeeDto)
-    {
-        var response = await _employeeService.SaveAsync(addEmployeeDto);
-        if (!response.Success) return BadRequest(response.ErrorMessage);
+            return Ok(response.DataTransferObject);
+        }
 
-        return Ok(response.DataTransferObject);
-    }
+        [HttpPost]
+        public async Task<IActionResult> Save([FromBody] AddEmployeeDto addEmployeeDto)
+        {
+            var response = await _employeeService.SaveAsync(addEmployeeDto);
+            if (!response.Success) return BadRequest(response.ErrorMessage);
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(ulong id)
-    {
-        var success = await _employeeService.DeleteAsync(id);
-        return success ? Ok(success) : BadRequest(success);
-    }
+            return Ok(response.DataTransferObject);
+        }
 
-    [HttpPatch("{id}")]
-    public async Task<IActionResult> Update(ulong id, [FromBody] UpdateEmployeeDto updateEmployeeDto)
-    {
-        var response = await _employeeService.UpdateAsync(id, updateEmployeeDto);
-        if (!response.Success) return BadRequest(response.ErrorMessage);
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(ulong id)
+        {
+            var success = await _employeeService.DeleteAsync(id);
+            return success ? Ok(success) : BadRequest(success);
+        }
 
-        return Ok(response.DataTransferObject);
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Update(ulong id, [FromBody] UpdateEmployeeDto updateEmployeeDto)
+        {
+            var response = await _employeeService.UpdateAsync(id, updateEmployeeDto);
+            if (!response.Success) return BadRequest(response.ErrorMessage);
+
+            return Ok(response.DataTransferObject);
+        }
     }
 }

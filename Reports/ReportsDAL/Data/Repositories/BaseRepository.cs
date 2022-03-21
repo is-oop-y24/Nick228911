@@ -1,45 +1,50 @@
-﻿using System.Linq.Expressions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ReportsBLL.Interfaces;
 using ReportsBLL.Models;
 
-namespace ReportsDAL.Data.Repositories;
-
-public class BaseRepository<T> : IRepository<T> where T : BaseEntity, IAggregateRoot
+namespace ReportsDAL.Data.Repositories
 {
-    private readonly DbSet<T> _dbSet;
-
-    protected BaseRepository(ReportsDbContext dbContext)
+    public class BaseRepository<T> : IRepository<T> where T : BaseEntity, IAggregateRoot
     {
-        _dbSet = dbContext.Set<T>();
-    }
+        private readonly DbSet<T> _dbSet;
 
-    protected DbSet<T> DbSet => _dbSet;
+        protected BaseRepository(ReportsDbContext dbContext)
+        {
+            _dbSet = dbContext.Set<T>();
+        }
 
-    public async Task AddAsync(T entity)
-    {
-        await DbSet.AddAsync(entity);
-    }
+        protected DbSet<T> DbSet => _dbSet;
 
-    public Task UpdateAsync(T entity)
-    {
-        DbSet.Update(entity);
-        return Task.FromResult(entity);
-    }
+        public async Task AddAsync(T entity)
+        {
+            await DbSet.AddAsync(entity);
+        }
 
-    public virtual Task<bool> DeleteAsync(T entity)
-    {
-        DbSet.Remove(entity);
-        return Task.FromResult(true);
-    }
+        public Task UpdateAsync(T entity)
+        {
+            DbSet.Update(entity);
+            return Task.FromResult(entity);
+        }
 
-    public virtual async Task<T?> FindAsync(Expression<Func<T, bool>> expression) // TODO: Get by PK
-    {
-        return await DbSet.SingleOrDefaultAsync(expression); // TODO: Lazy .Include for employee
-    }
+        public virtual Task<bool> DeleteAsync(T entity)
+        {
+            DbSet.Remove(entity);
+            return Task.FromResult(true);
+        }
 
-    public virtual async Task<List<T>> GetListAsync(Expression<Func<T, bool>> expression)
-    {
-        return await DbSet.Where(expression).ToListAsync();
+        public virtual async Task<T?> FindAsync(Expression<Func<T, bool>> expression) // TODO: Get by PK
+        {
+            return await DbSet.SingleOrDefaultAsync(expression); // TODO: Lazy .Include for employee
+        }
+
+        public virtual async Task<List<T>> GetListAsync(Expression<Func<T, bool>> expression)
+        {
+            return await DbSet.Where(expression).ToListAsync();
+        }
     }
 }

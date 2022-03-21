@@ -1,12 +1,13 @@
-﻿using AutoMapper;
-using ReportsBLL.DataTransferObjects;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using ReportsBLL.DataTransferObjects.Problems;
 using ReportsBLL.Interfaces;
-using ReportsBLL.Models.Employees;
 using ReportsBLL.Models.Problems;
+using ReportsBLL.Services;
 using ReportsBLL.Services.Communication;
-
-namespace ReportsBLL.Services;
 
 public class ProblemService : BaseService<Employee>
 {

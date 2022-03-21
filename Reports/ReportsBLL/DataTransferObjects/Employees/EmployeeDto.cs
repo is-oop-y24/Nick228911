@@ -1,7 +1,6 @@
-﻿using ReportsBLL.DataTransferObjects.Problems;
+﻿using System.Collections.Generic;
+using ReportsBLL.DataTransferObjects.Problems;
 using ReportsBLL.Interfaces;
-
-namespace ReportsBLL.DataTransferObjects.Employees;
 
 public class EmployeeDto : IViewModel
 {

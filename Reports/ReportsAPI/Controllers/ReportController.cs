@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using ReportsAPI.Controllers;
 using ReportsBLL.DataTransferObjects.Reports;
-using ReportsBLL.Services;
-
-namespace ReportsAPI.Controllers;
 
 public class ReportController : BaseApiController
 {

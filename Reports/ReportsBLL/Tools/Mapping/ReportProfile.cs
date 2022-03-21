@@ -2,14 +2,15 @@
 using ReportsBLL.DataTransferObjects.Reports;
 using ReportsBLL.Models.Reports;
 
-namespace ReportsBLL.Tools.Mapping;
-
-public class ReportProfile : Profile
+namespace ReportsBLL.Tools.Mapping
 {
-    public ReportProfile()
+    public class ReportProfile : Profile
     {
-        CreateMap<Report, ReportDto>();
+        public ReportProfile()
+        {
+            CreateMap<Report, ReportDto>();
 
-        CreateMap<AddReportDto, Report>();
+            CreateMap<AddReportDto, Report>();
+        }
     }
 }

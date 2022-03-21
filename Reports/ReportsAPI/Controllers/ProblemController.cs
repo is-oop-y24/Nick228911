@@ -1,84 +1,85 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ReportsBLL.DataTransferObjects.Comments;
 using ReportsBLL.DataTransferObjects.Problems;
-using ReportsBLL.Services;
 
-namespace ReportsAPI.Controllers;
-
-public class ProblemController : BaseApiController
+namespace ReportsAPI.Controllers
 {
-    private readonly ProblemService _problemService;
-
-    public ProblemController(ProblemService problemService)
+    public class ProblemController : BaseApiController
     {
-        _problemService = problemService;
-    }
+        private readonly ProblemService _problemService;
 
-    [HttpGet]
-    public async Task<IActionResult> GetAll([FromQuery] ulong? employeeId, DateTime? timeCreatedFilter)
-    {
-        var response = await _problemService.GetAllAsync();
-        var problems = response.DataTransferObjects;
+        public ProblemController(ProblemService problemService)
+        {
+            _problemService = problemService;
+        }
 
-        if (employeeId is not null)
-            problems = problems.Where(p => p.EmployeeId == employeeId);
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] ulong? employeeId, DateTime? timeCreatedFilter)
+        {
+            var response = await _problemService.GetAllAsync();
+            var problems = response.DataTransferObjects;
 
-        if (timeCreatedFilter is not null)
-            problems = problems.Where(p => p.CreationTime == timeCreatedFilter);
+            if (employeeId is not null)
+                problems = problems.Where(p => p.EmployeeId == employeeId);
 
-        return Ok(problems);
-    }
+            if (timeCreatedFilter is not null)
+                problems = problems.Where(p => p.CreationTime == timeCreatedFilter);
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get(ulong id)
-    {
-        var response = await _problemService.GetAsync(id);
-        if (!response.Success) return BadRequest(response.ErrorMessage);
+            return Ok(problems);
+        }
 
-        return Ok(response.DataTransferObject);
-    }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(ulong id)
+        {
+            var response = await _problemService.GetAsync(id);
+            if (!response.Success) return BadRequest(response.ErrorMessage);
 
-    [HttpPost]
-    public async Task<IActionResult> Save([FromBody] AddProblemDto addEmployeeDto)
-    {
-        var response = await _problemService.SaveAsync(addEmployeeDto);
-        if (!response.Success) return BadRequest(response.ErrorMessage);
+            return Ok(response.DataTransferObject);
+        }
 
-        return Ok(response.DataTransferObject);
-    }
+        [HttpPost]
+        public async Task<IActionResult> Save([FromBody] AddProblemDto addEmployeeDto)
+        {
+            var response = await _problemService.SaveAsync(addEmployeeDto);
+            if (!response.Success) return BadRequest(response.ErrorMessage);
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(ulong id)
-    {
-        var success = await _problemService.DeleteAsync(id);
-        return success ? Ok(success) : BadRequest(success);
-    }
+            return Ok(response.DataTransferObject);
+        }
 
-    [HttpPatch("{id}")]
-    public async Task<IActionResult> Update(ulong id, [FromBody] UpdateProblemDto updateProblemDto)
-    {
-        var response = await _problemService.UpdateAsync(id, updateProblemDto);
-        if (!response.Success) return BadRequest(response.ErrorMessage);
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(ulong id)
+        {
+            var success = await _problemService.DeleteAsync(id);
+            return success ? Ok(success) : BadRequest(success);
+        }
 
-        return Ok(response.DataTransferObject);
-    }
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Update(ulong id, [FromBody] UpdateProblemDto updateProblemDto)
+        {
+            var response = await _problemService.UpdateAsync(id, updateProblemDto);
+            if (!response.Success) return BadRequest(response.ErrorMessage);
 
-    [HttpPatch("closeProblem/{id}")]
-    public async Task<IActionResult> CloseProblem(ulong id)
-    {
-        var response = await _problemService.CloseProblem(id);
-        if (!response.Success) return BadRequest(response.ErrorMessage);
+            return Ok(response.DataTransferObject);
+        }
 
-        return Ok(response.DataTransferObject);
-    }
+        [HttpPatch("closeProblem/{id}")]
+        public async Task<IActionResult> CloseProblem(ulong id)
+        {
+            var response = await _problemService.CloseProblem(id);
+            if (!response.Success) return BadRequest(response.ErrorMessage);
 
-    [HttpPost("{problemId}/AddComment")]
-    public async Task<IActionResult> AddComment(ulong problemId, string content)
-    {
-        var response = await _problemService.AddComment(problemId, content);
-        if (!response.Success) return BadRequest(response.ErrorMessage);
+            return Ok(response.DataTransferObject);
+        }
 
-        return Ok(response.DataTransferObject);
+        [HttpPost("{problemId}/AddComment")]
+        public async Task<IActionResult> AddComment(ulong problemId, string content)
+        {
+            var response = await _problemService.AddComment(problemId, content);
+            if (!response.Success) return BadRequest(response.ErrorMessage);
+
+            return Ok(response.DataTransferObject);
+        }
     }
 }

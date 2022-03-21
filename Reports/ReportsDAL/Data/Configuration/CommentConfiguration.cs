@@ -1,30 +1,30 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ReportsBLL.Models.Employees;
 using ReportsBLL.Models.Problems;
 
-namespace ReportsDAL.Data.Configuration;
-
-public class CommentConfiguration : IEntityTypeConfiguration<Comment>
+namespace ReportsDAL.Data.Configuration
 {
-    public void Configure(EntityTypeBuilder<Comment> builder)
+    public class CommentConfiguration : IEntityTypeConfiguration<Comment>
     {
-        builder.ToTable("Comment");
-        builder.HasKey(c => c.Id);
-        builder.Property(c => c.Id)
-            .HasColumnName("CommentId");
-        builder.Property(c => c.Id)
-            .IsRequired()
-            .ValueGeneratedOnAdd();
-        builder.Property(c => c.Content)
-            .IsRequired();
-        builder.Property(c => c.CreationTime)
-            .HasColumnType("smalldatetime")
-            .IsRequired();
+        public void Configure(EntityTypeBuilder<Comment> builder)
+        {
+            builder.ToTable("Comment");
+            builder.HasKey(c => c.Id);
+            builder.Property(c => c.Id)
+                .HasColumnName("CommentId");
+            builder.Property(c => c.Id)
+                .IsRequired()
+                .ValueGeneratedOnAdd();
+            builder.Property(c => c.Content)
+                .IsRequired();
+            builder.Property(c => c.CreationTime)
+                .HasColumnType("smalldatetime")
+                .IsRequired();
 
-        builder.HasOne(c => (Employee)c.Employee)
-            .WithMany().OnDelete(DeleteBehavior.NoAction);
-        builder.HasOne(c => c.Problem)
-            .WithMany(p => p.Comments);
+            builder.HasOne(c => (Employee)c.Employee)
+                .WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(c => c.Problem)
+                .WithMany(p => p.Comments);
+        }
     }
 }

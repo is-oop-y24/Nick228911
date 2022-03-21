@@ -1,31 +1,38 @@
-﻿using ReportsBLL.Interfaces;
+﻿using System.Collections.Generic;
+using ReportsBLL.Interfaces;
 
-namespace ReportsBLL.Services.Communication;
-
-public class Response<T> where T : class, IViewModel
+namespace ReportsBLL.Services.Communication
 {
-    private readonly IList<T>? _dataTransferObjects;
-
-    public Response(string errorMessage)
+    public class Response<T> where T : class, IViewModel
     {
-        ErrorMessage = errorMessage;
-        Success = false;
-    }
+        private readonly IList<T>? _dataTransferObjects;
 
-    public Response(IList<T> dataTransferObjects)
-    {
-        _dataTransferObjects = dataTransferObjects;
-        Success = true;
-    }
+        public Response(string errorMessage)
+        {
+            ErrorMessage = errorMessage;
+            Success = false;
+        }
 
-    public Response(T dataTransferObject)
-    {
-        _dataTransferObjects = new List<T>(1) { dataTransferObject };
-        Success = true;
-    }
+        public Response(IList<T> dataTransferObjects)
+        {
+            _dataTransferObjects = dataTransferObjects;
+            Success = true;
+        }
 
-    public bool Success { get; protected set; }
-    public string ErrorMessage { get; protected set; } = string.Empty;
-    public IEnumerable<T>? DataTransferObjects => _dataTransferObjects;
-    public T? DataTransferObject => _dataTransferObjects?[0];
+        public Response(T dataTransferObject)
+        {
+            _dataTransferObjects = new List<T>(1) { dataTransferObject };
+            Success = true;
+        }
+
+        public Response(List<EmployeeDto> dataTransferObjects)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool Success { get; protected set; }
+        public string ErrorMessage { get; protected set; } = string.Empty;
+        public IEnumerable<T>? DataTransferObjects => _dataTransferObjects;
+        public T? DataTransferObject => _dataTransferObjects?[0];
+    }
 }

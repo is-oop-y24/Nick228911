@@ -1,9 +1,12 @@
-﻿namespace ReportsBLL.Models.Employees;
+﻿using System.Collections.Generic;
 
-public interface ISupervisor : IPerson
+namespace ReportsBLL.Models.Employees
 {
-    IEnumerable<ISubordinate> Subordinates { get; }
-    void AddSubordinate(ISubordinate subordinate);
-    void AddSubordinate(string username);
-    bool TryRemoveSubordinate(ISubordinate subordinate);
+    public interface ISupervisor : IPerson
+    {
+        IEnumerable<ISubordinate> Subordinates { get; }
+        void AddSubordinate(ISubordinate subordinate);
+        void AddSubordinate(string username);
+        bool TryRemoveSubordinate(ISubordinate subordinate);
+    }
 }
